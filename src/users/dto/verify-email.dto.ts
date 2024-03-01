@@ -1,1 +1,3 @@
-export class VerifyEmailDto {}
+export class VerifyEmailDto {
+  signupVerifyToken: string;
+}
