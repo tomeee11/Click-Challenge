@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import emailConfig from './config/emailConfig';
 import { validationSchema } from './config/validationSchema';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
+import authConfig from './config/authConfig';
 
 @Module({
   imports: [
@@ -15,7 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         `${process.cwd()}/src/config/env/.${process.env.NODE_ENV}.env`,
       ],
       //envFilePath는 NODE_ENV의 값이 stage라면 dist 디텍터리 아래 존재하는 파일인 .stage.env 파일의 절대 경로를 가지게 된다.
-      load: [emailConfig],
+      load: [emailConfig, authConfig],
       //load 속성을 통해 앞에서 구성해둔 ConfigFactory를 지정한다.
       isGlobal: true,
       //전역 모듈로 동작하게 설정, 필요시에 EmailModule에만 임포트해도 된다.
@@ -34,6 +36,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       migrations: [__dirname + '/**/migrations/*.js'],
       migrationsTableName: 'migrations',
     }),
+    AuthModule,
   ],
   controllers: [],
   providers: [],
