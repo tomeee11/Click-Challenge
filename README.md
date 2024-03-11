@@ -1,77 +1,131 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+
+#  Click-Challenge
+<p align="center"><img src="https://github.com/tomeee11/Click-Challenge/assets/114478045/3df8131f-01d0-490a-ad5b-cd92105f179f" width="60%" height="20%"></p>
+
 </p>
+## 📖 Description
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Click-Challenge는 참가자들이 실시간으로 클릭 수를 확인하며 서로 경쟁하는 방식으로 진행됩니다.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## :baby_chick: Demo
+추후 추가 예정
 
-## Description
+## ⭐ Main Feature
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### User
+- email 인증 기능.
+- JWT를 이용하여 인증/인가.
+- CQRS 패턴 적용하여, command, query 분리
 
-## Installation
 
-```bash
-$ npm install
+## 💻 Getting Started
+
+### Installation
+```
+npm install
+```
+### Develop Mode
+```
+npm run start:dev
 ```
 
-## Running the app
+## 🔧 Stack
+- **Language**: JavaScript
+- **Library & Framework** : Node.js, Nest.js
+- **Database** :Mysql
+- **ORM** : TypeOrm
+- **Deploy**: ex)AWS EC2
 
-```bash
-# development
-$ npm run start
+## :open_file_folder: Project Structure
 
-# watch mode
-$ npm run start:dev
+```markdown
+현재.
+📦src
+ ┣ 📂auth
+ ┃ ┣ 📜auth.module.ts
+ ┃ ┗ 📜auth.service.ts
+ ┣ 📂batch
+ ┃ ┣ 📜batch.controller.ts
+ ┃ ┣ 📜batch.module.ts
+ ┃ ┗ 📜task.service.ts
+ ┣ 📂config
+ ┃ ┣ 📂env
+ ┃ ┃ ┣ 📜.development.env
+ ┃ ┃ ┣ 📜.production.env
+ ┃ ┃ ┗ 📜.stage.env
+ ┃ ┣ 📜authConfig.ts
+ ┃ ┣ 📜emailConfig.ts
+ ┃ ┗ 📜validationSchema.ts
+ ┣ 📂email
+ ┃ ┣ 📜email.module.ts
+ ┃ ┗ 📜email.service.ts
+ ┣ 📂exception
+ ┃ ┣ 📜exception.module.ts
+ ┃ ┗ 📜http-exception.filter.ts
+ ┣ 📂health-check
+ ┃ ┗ 📜health-check.controller.ts
+ ┣ 📂logging
+ ┃ ┣ 📜logging.interceptor.ts
+ ┃ ┗ 📜logging.module.ts
+ ┣ 📂migrations
+ ┣ 📂users
+ ┃ ┣ 📂command
+ ┃ ┃ ┣ 📜create-user.command.ts
+ ┃ ┃ ┣ 📜create-user.handler.ts
+ ┃ ┃ ┣ 📜login.command.ts
+ ┃ ┃ ┣ 📜login.handler.ts
+ ┃ ┃ ┣ 📜user-created.event.ts
+ ┃ ┃ ┣ 📜verify-access-token.command.ts
+ ┃ ┃ ┣ 📜verify-access-token.handler.ts
+ ┃ ┃ ┣ 📜verify-email.command.ts
+ ┃ ┃ ┗ 📜verify-email.handler.ts
+ ┃ ┣ 📂dto
+ ┃ ┃ ┣ 📜create-user.dto.ts
+ ┃ ┃ ┣ 📜user-login.dto.ts
+ ┃ ┃ ┗ 📜verify-email.dto.ts
+ ┃ ┣ 📂entities
+ ┃ ┃ ┗ 📜user.entity.ts
+ ┃ ┣ 📂event
+ ┃ ┃ ┣ 📜cqrs-event.ts
+ ┃ ┃ ┣ 📜test.event.ts
+ ┃ ┃ ┣ 📜user-created.event.ts
+ ┃ ┃ ┗ 📜user-events.handler.ts
+ ┃ ┣ 📂query
+ ┃ ┃ ┣ 📜get-user-info.handler.ts
+ ┃ ┃ ┗ 📜get-user-info.query.ts
+ ┃ ┣ 📜UserInfo.ts
+ ┃ ┣ 📜users.controller.ts
+ ┃ ┣ 📜users.module.ts
+ ┃ ┗ 📜users.service.ts
+ ┣ 📂utils
+ ┃ ┗ 📂decorators
+ ┃ ┃ ┗ 📜not-in.ts
+ ┣ 📜app.module.ts
+ ┣ 📜auth.guard.ts
+ ┗ 📜main.ts
 
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+## 🔨 Server Architecture
+추후 추가 예정
 
-```bash
-# unit tests
-$ npm run test
+## ⚒ CI/CD
+추후 추가 예정
 
-# e2e tests
-$ npm run test:e2e
+## 👨‍💻 Role & Contribution
 
-# test coverage
-$ npm run test:cov
-```
+**Frontend (Web)**
 
-## Support
+- ex)관리자 페이지 (Vue.js) 개발
+- ex)전체 아키텍처 구성
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**Devops**
 
-## Stay in touch
+-ex) CI/CD 구축 (Docker, Github Action)
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**etc**
 
-## License
+- 전체 개발 일정 및 이슈 관리
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-//Nest.js를 선택한 이유. 1.다양한 기능을 기본으로 제공 2.모듈/컴포넌트 기반으로 재사용성을 높힌다.
-3.ioc/di를 통해 관점 지향 프로그래밍과 같은 객체 지향 개념 도입.
-4.typescript를 기본 언어로 채택하여 타입시스템의 장점을 누릴 수 있다. 5.인터셉터, 미들웨어, 스케줄링, 로깅, 스웨거, ORM 등 웹프레임워크가 갖춰야 할 필수 기능을 내장, 쉽게 다른 모듈을 가져다 쓸 수 있다.
-# Click-Challenge
+## 👨‍👩‍👧‍👦 Developer
+*  **이승원** ([tomeee11](https://github.com/tomeee11))
