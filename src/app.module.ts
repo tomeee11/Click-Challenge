@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import emailConfig from './config/emailConfig';
 import { validationSchema } from './config/validationSchema';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './auth/auth.module';
+// import { AuthModule } from './auth/auth.module';
 import { ExceptionModule } from './exception/exception.module';
 import { LoggingModule } from './logging/logging.module';
 import authConfig from './config/authConfig';
@@ -42,7 +42,6 @@ import { HealthCheckController } from './health-check/health-check.controller';
       migrations: [__dirname + '/**/migrations/*.js'],
       migrationsTableName: 'migrations',
     }),
-    AuthModule,
     ExceptionModule,
     LoggingModule,
     BatchModule,

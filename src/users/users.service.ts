@@ -1,178 +1,185 @@
-import * as uuid from 'uuid';
-import {
-  Injectable,
-  NotFoundException,
-  UnprocessableEntityException,
-} from '@nestjs/common';
-import { EmailService } from 'src/email/email.service';
-import { UserInfo } from './UserInfo';
-import { UserEntity } from './entities/user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
-import { AuthService } from 'src/auth/auth.service';
+/*
+NOTE: cqrs 구현하여 service를 직접 사용하지 않고,
+커멘드와 쿼리르 나누어 구현
+각 기능의 ICommand와 IQuery를 통해 인터페이스를 구현하여 각 쿼리나 커멘드의 객체의 형태를 가집니다.
+이후 해당 인터페이스를 타입으로 지정하여 핸들러를 구현합니다. 
+*/
 
-@Injectable()
-export class UsersService {
-  constructor(
-    private emailService: EmailService,
-    @InjectRepository(UserEntity)
-    private usersRepository: Repository<UserEntity>,
-    private dataSource: DataSource,
-    private authService: AuthService,
-  ) {}
+// import * as uuid from 'uuid';
+// import {
+//   Injectable,
+//   NotFoundException,
+//   UnprocessableEntityException,
+// } from '@nestjs/common';
+// import { EmailService } from 'src/email/email.service';
+// import { UserInfo } from './UserInfo';
+// import { UserEntity } from './entities/user.entity';
+// import { InjectRepository } from '@nestjs/typeorm';
+// import { DataSource, Repository } from 'typeorm';
+// import { AuthService } from 'src/auth/auth.service';
 
-  async createUser(name: string, email: string, password: string) {
-    const userExist = await this.checkUserExists(email);
-    if (userExist) {
-      throw new UnprocessableEntityException(
-        '해당 이메일로는 가입할 수 없습니다.',
-      );
-    }
+// @Injectable()
+// export class UsersService {
+//   constructor(
+//     private emailService: EmailService,
+//     @InjectRepository(UserEntity)
+//     private usersRepository: Repository<UserEntity>,
+//     private dataSource: DataSource,
+//     private authService: AuthService,
+//   ) {}
 
-    const signupVerifyToken = uuid.v1();
+//   async createUser(name: string, email: string, password: string) {
+//     const userExist = await this.checkUserExists(email);
+//     if (userExist) {
+//       throw new UnprocessableEntityException(
+//         '해당 이메일로는 가입할 수 없습니다.',
+//       );
+//     }
 
-    // await this.saveUser(name, email, password, signupVerifyToken);
-    // await this.saveUserUsingQueryRunner(name, email, password, signupVerifyToken);
-    await this.saveUserUsingTransaction(
-      name,
-      email,
-      password,
-      signupVerifyToken,
-    );
+//     const signupVerifyToken = uuid.v1();
 
-    await this.sendMemberJoinEmail(email, signupVerifyToken);
-  }
+//     // await this.saveUser(name, email, password, signupVerifyToken);
+//     // await this.saveUserUsingQueryRunner(name, email, password, signupVerifyToken);
+//     await this.saveUserUsingTransaction(
+//       name,
+//       email,
+//       password,
+//       signupVerifyToken,
+//     );
 
-  private async checkUserExists(emailAddress: string): Promise<boolean> {
-    const user = await this.usersRepository.findOne({
-      where: {
-        email: emailAddress,
-      },
-    });
+//     await this.sendMemberJoinEmail(email, signupVerifyToken);
+//   }
 
-    return user !== null;
-  }
+//   private async checkUserExists(emailAddress: string): Promise<boolean> {
+//     const user = await this.usersRepository.findOne({
+//       where: {
+//         email: emailAddress,
+//       },
+//     });
 
-  //transaction 사용 전
-  // private async saveUser(
-  //   name: string,
-  //   email: string,
-  //   password: string,
-  //   signupVerifyToken: string,
-  // ) {
-  //   const user = new UserEntity();
-  //   user.name = name;
-  //   user.email = email;
-  //   user.password = password;
-  //   user.signupVerifyToken = signupVerifyToken;
-  //   await this.usersRepository.save(user);
-  // }
+//     return user !== null;
+//   }
 
-  //QueryRunner 사용하는 방법
-  // private async saveUserUsingQueryRunner(
-  //   name: string,
-  //   email: string,
-  //   password: string,
-  //   signupVerifyToken: string,
-  // ) {
-  //   const queryRunner = this.dataSource.createQueryRunner();
+//   //transaction 사용 전
+//   // private async saveUser(
+//   //   name: string,
+//   //   email: string,
+//   //   password: string,
+//   //   signupVerifyToken: string,
+//   // ) {
+//   //   const user = new UserEntity();
+//   //   user.name = name;
+//   //   user.email = email;
+//   //   user.password = password;
+//   //   user.signupVerifyToken = signupVerifyToken;
+//   //   await this.usersRepository.save(user);
+//   // }
 
-  //   await queryRunner.connect();
-  //   await queryRunner.startTransaction();
+//   //QueryRunner 사용하는 방법
+//   // private async saveUserUsingQueryRunner(
+//   //   name: string,
+//   //   email: string,
+//   //   password: string,
+//   //   signupVerifyToken: string,
+//   // ) {
+//   //   const queryRunner = this.dataSource.createQueryRunner();
 
-  //   try {
-  //     const user = new UserEntity();
-  //     user.name = name;
-  //     user.email = email;
-  //     user.password = password;
-  //     user.signupVerifyToken = signupVerifyToken;
+//   //   await queryRunner.connect();
+//   //   await queryRunner.startTransaction();
 
-  //     await queryRunner.manager.save(user);
+//   //   try {
+//   //     const user = new UserEntity();
+//   //     user.name = name;
+//   //     user.email = email;
+//   //     user.password = password;
+//   //     user.signupVerifyToken = signupVerifyToken;
 
-  //     // throw new InternalServerErrorException(); // 일부러 에러를 발생시켜 본다
+//   //     await queryRunner.manager.save(user);
 
-  //     await queryRunner.commitTransaction();
-  //   } catch (e) {
-  //     // 에러가 발생하면 롤백
-  //     await queryRunner.rollbackTransaction();
-  //   } finally {
-  //     // 직접 생성한 QueryRunner는 해제시켜 주어야 함
-  //     await queryRunner.release();
-  //   }
-  // }
+//   //     // throw new InternalServerErrorException(); // 일부러 에러를 발생시켜 본다
 
-  //transaction 함수를 직접 이용하는 방법
-  private async saveUserUsingTransaction(
-    name: string,
-    email: string,
-    password: string,
-    signupVerifyToken: string,
-  ) {
-    await this.dataSource.transaction(async (manager) => {
-      const user = new UserEntity();
-      user.name = name;
-      user.email = email;
-      user.password = password;
-      user.signupVerifyToken = signupVerifyToken;
+//   //     await queryRunner.commitTransaction();
+//   //   } catch (e) {
+//   //     // 에러가 발생하면 롤백
+//   //     await queryRunner.rollbackTransaction();
+//   //   } finally {
+//   //     // 직접 생성한 QueryRunner는 해제시켜 주어야 함
+//   //     await queryRunner.release();
+//   //   }
+//   // }
 
-      await manager.save(user);
+//   //transaction 함수를 직접 이용하는 방법
+//   private async saveUserUsingTransaction(
+//     name: string,
+//     email: string,
+//     password: string,
+//     signupVerifyToken: string,
+//   ) {
+//     await this.dataSource.transaction(async (manager) => {
+//       const user = new UserEntity();
+//       user.name = name;
+//       user.email = email;
+//       user.password = password;
+//       user.signupVerifyToken = signupVerifyToken;
 
-      // throw new InternalServerErrorException();
-    });
-  }
+//       await manager.save(user);
 
-  private async sendMemberJoinEmail(email: string, signupVerifyToken: string) {
-    await this.emailService.sendMemberJoinVerification(
-      email,
-      signupVerifyToken,
-    );
-  }
+//       // throw new InternalServerErrorException();
+//     });
+//   }
 
-  async verifyEmail(signupVerifyToken: string): Promise<string> {
-    const user = await this.usersRepository.findOne({
-      where: { signupVerifyToken },
-    });
+//   private async sendMemberJoinEmail(email: string, signupVerifyToken: string) {
+//     await this.emailService.sendMemberJoinVerification(
+//       email,
+//       signupVerifyToken,
+//     );
+//   }
 
-    if (!user) {
-      throw new NotFoundException('유저가 존재하지 않습니다.');
-    }
+//   async verifyEmail(signupVerifyToken: string): Promise<string> {
+//     const user = await this.usersRepository.findOne({
+//       where: { signupVerifyToken },
+//     });
 
-    return this.authService.login({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    });
-  }
+//     if (!user) {
+//       throw new NotFoundException('유저가 존재하지 않습니다.');
+//     }
 
-  async login(email: string, password: string): Promise<string> {
-    const user = await this.usersRepository.findOne({
-      where: { email, password },
-    });
+//     return this.authService.login({
+//       id: user.id,
+//       name: user.name,
+//       email: user.email,
+//     });
+//   }
 
-    if (!user) {
-      throw new NotFoundException('유저가 존재하지 않습니다.');
-    }
+//   async login(email: string, password: string): Promise<string> {
+//     const user = await this.usersRepository.findOne({
+//       where: { email, password },
+//     });
 
-    return this.authService.login({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    });
-  }
+//     if (!user) {
+//       throw new NotFoundException('유저가 존재하지 않습니다.');
+//     }
 
-  async getUserInfo(userId: number): Promise<UserInfo> {
-    const user = await this.usersRepository.findOne({
-      where: { id: userId },
-    });
+//     return this.authService.login({
+//       id: user.id,
+//       name: user.name,
+//       email: user.email,
+//     });
+//   }
 
-    if (!user) {
-      throw new NotFoundException('유저가 존재하지 않습니다.');
-    }
+//   async getUserInfo(userId: number): Promise<UserInfo> {
+//     const user = await this.usersRepository.findOne({
+//       where: { id: userId },
+//     });
 
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    };
-  }
-}
+//     if (!user) {
+//       throw new NotFoundException('유저가 존재하지 않습니다.');
+//     }
+
+//     return {
+//       id: user.id,
+//       name: user.name,
+//       email: user.email,
+//     };
+//   }
+// }
