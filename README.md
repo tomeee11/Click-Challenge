@@ -11,10 +11,18 @@ Click-Challenge는 참가자들이 실시간으로 클릭 수를 확인하며 �
 추후 추가 예정
 
 ## ⭐ Main Feature
-
+### Logging
+- Logging 모듈을 통해 전역으로 로깅 인터셉터 적용.
+### Exception
+- exception 모듈을 통해 전역 예외 필터 적용
+### Batch
+- (미구현)DB에 저장된 데이터를 다른 DB로 주기적으로 이동
+### health-check
+- (미구현)Batch를 통해 주기적으로 DB 상태 점검.
 ### User
 - email 인증 기능.
 - JWT를 이용하여 인증/인가.
+- Guard를 통해 라우트 핸들러에서 인증
 - CQRS 패턴 적용하여, command, query 분리
 
 
