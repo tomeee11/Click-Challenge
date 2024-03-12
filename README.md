@@ -25,6 +25,9 @@ Click-Challenge는 참가자들이 실시간으로 클릭 수를 확인하며 �
 - Guard를 통해 라우트 핸들러에서 인증
 - CQRS 패턴 적용하여, command, query 분리
 
+##현재까지 작업 내용은 클론코딩이며 부족한 부분들을 추가적으로 습득하며 차근차근 넓혀갈 계획입니다.
+
+
 
 ## 💻 Getting Started
 
