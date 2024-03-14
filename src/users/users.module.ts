@@ -3,14 +3,15 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { EmailModule } from 'src/email/email.module';
-import { CreateUserHandler } from './command/create-user.handler';
-import { LoginHandler } from './command/login.handler';
-import { VerifyAccessTokenHandler } from './command/verify-access-token.handler';
-import { VerifyEmailHandler } from './command/verify-email.handler';
-import { UserEventsHandler } from './event/user-events.handler';
-import { GetUserInfoQueryHandler } from './query/get-user-info.handler';
-import { UsersController } from './users.controller';
-import { UserEntity } from './entities/user.entity';
+import { UserEventsHandler } from './application/event/user-events.handler';
+import { UsersController } from './interface/users.controller';
+import { UserFactory } from './domain/user.factory';
+import { CreateUserHandler } from './application/command/create-user.handler';
+import { VerifyEmailHandler } from './application/command/verify-email.handler';
+import { LoginHandler } from './application/command/login.handler';
+import { VerifyAccessTokenHandler } from './application/command/verify-access-token.handler';
+import { GetUserInfoQueryHandler } from './application/query/get-user-info.handler';
+import { UserEntity } from './infra/db/entities/user.entity';
 
 const commandHandlers = [
   CreateUserHandler,
@@ -31,6 +32,12 @@ const eventHandlers = [UserEventsHandler];
     CqrsModule,
   ],
   controllers: [UsersController],
-  providers: [...commandHandlers, ...queryHandlers, ...eventHandlers, Logger],
+  providers: [
+    ...commandHandlers,
+    ...queryHandlers,
+    ...eventHandlers,
+    Logger,
+    UserFactory,
+  ],
 })
 export class UsersModule {}

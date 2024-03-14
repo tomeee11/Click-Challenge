@@ -2,24 +2,24 @@ import { Repository } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
-import { VerifyEmailCommand } from './verify-email.command';
 import { AuthService } from 'src/auth/auth.service';
-import { UserEntity } from '../entities/user.entity';
+import { LoginCommand } from './login.command';
+import { UserEntity } from 'src/users/infra/db/entities/user.entity';
 
 @Injectable()
-@CommandHandler(VerifyEmailCommand)
-export class VerifyEmailHandler implements ICommandHandler<VerifyEmailCommand> {
+@CommandHandler(LoginCommand)
+export class LoginHandler implements ICommandHandler<LoginCommand> {
   constructor(
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
     private authService: AuthService,
   ) {}
 
-  async execute(command: VerifyEmailCommand) {
-    const { signupVerifyToken } = command;
+  async execute(command: LoginCommand) {
+    const { email, password } = command;
 
     const user = await this.usersRepository.findOne({
-      where: { signupVerifyToken },
+      where: { email, password },
     });
 
     if (!user) {
