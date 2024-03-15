@@ -1,3 +1,7 @@
+/*
+인프라 레이어는 외부에서 가져다 쓰는 컴포넌트를 작성한다.
+ex)DB, Email, 외부 구현체 등
+*/
 import { Connection, Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
