@@ -60,7 +60,7 @@ describe('LoginHandler', () => {
       });
 
       // When
-      const executePromise = loginHandler.execute(loginCommand);
+      const loginCommand = new LoginCommand(email, password);
       await loginHandler.execute(loginCommand);
       // Then
       expect(authService.login).toBeCalledWith({ email, id, name });
