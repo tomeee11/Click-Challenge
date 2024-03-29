@@ -11,7 +11,7 @@ import { UserEntity } from 'src/users/infra/db/entities/user.entity';
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
   constructor(
-    private dataSource: DataSource, // DataSource 주입
+    private dataSource: DataSource,
     private eventBus: EventBus,
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
