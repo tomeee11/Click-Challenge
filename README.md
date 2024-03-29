@@ -50,7 +50,6 @@ npm run start:dev
 ## :open_file_folder: Project Structure
 
 ```markdown
-현재.
 📦src
  ┣ 📂auth
  ┃ ┣ 📜auth.module.ts
@@ -60,10 +59,6 @@ npm run start:dev
  ┃ ┣ 📜batch.module.ts
  ┃ ┗ 📜task.service.ts
  ┣ 📂config
- ┃ ┣ 📂env
- ┃ ┃ ┣ 📜.development.env
- ┃ ┃ ┣ 📜.production.env
- ┃ ┃ ┗ 📜.stage.env
  ┃ ┣ 📜authConfig.ts
  ┃ ┣ 📜emailConfig.ts
  ┃ ┗ 📜validationSchema.ts
@@ -78,36 +73,52 @@ npm run start:dev
  ┣ 📂logging
  ┃ ┣ 📜logging.interceptor.ts
  ┃ ┗ 📜logging.module.ts
- ┣ 📂migrations
  ┣ 📂users
- ┃ ┣ 📂command
- ┃ ┃ ┣ 📜create-user.command.ts
- ┃ ┃ ┣ 📜create-user.handler.ts
- ┃ ┃ ┣ 📜login.command.ts
- ┃ ┃ ┣ 📜login.handler.ts
- ┃ ┃ ┣ 📜user-created.event.ts
- ┃ ┃ ┣ 📜verify-access-token.command.ts
- ┃ ┃ ┣ 📜verify-access-token.handler.ts
- ┃ ┃ ┣ 📜verify-email.command.ts
- ┃ ┃ ┗ 📜verify-email.handler.ts
- ┃ ┣ 📂dto
- ┃ ┃ ┣ 📜create-user.dto.ts
- ┃ ┃ ┣ 📜user-login.dto.ts
- ┃ ┃ ┗ 📜verify-email.dto.ts
- ┃ ┣ 📂entities
- ┃ ┃ ┗ 📜user.entity.ts
- ┃ ┣ 📂event
+ ┃ ┣ 📂application
+ ┃ ┃ ┣ 📂adapter
+ ┃ ┃ ┃ ┗ 📜iemail.service.ts
+ ┃ ┃ ┣ 📂command
+ ┃ ┃ ┃ ┣ 📜create-user.command.ts
+ ┃ ┃ ┃ ┣ 📜create-user.handler.spec.ts
+ ┃ ┃ ┃ ┣ 📜create-user.handler.ts
+ ┃ ┃ ┃ ┣ 📜login.command.ts
+ ┃ ┃ ┃ ┣ 📜login.handler.spec.ts
+ ┃ ┃ ┃ ┣ 📜login.handler.ts
+ ┃ ┃ ┃ ┣ 📜verify-access-token.command.ts
+ ┃ ┃ ┃ ┣ 📜verify-access-token.handler.spec.ts
+ ┃ ┃ ┃ ┣ 📜verify-access-token.handler.ts
+ ┃ ┃ ┃ ┣ 📜verify-email.command.ts
+ ┃ ┃ ┃ ┣ 📜verify-email.handler.spec.ts
+ ┃ ┃ ┃ ┗ 📜verify-email.handler.ts
+ ┃ ┃ ┣ 📂event
+ ┃ ┃ ┃ ┗ 📜user-events.handler.ts
+ ┃ ┃ ┗ 📂query
+ ┃ ┃ ┃ ┣ 📜get-user-info.handler.ts
+ ┃ ┃ ┃ ┗ 📜get-user-info.query.ts
+ ┃ ┣ 📂domain
+ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┗ 📜iuser.repository.ts
  ┃ ┃ ┣ 📜cqrs-event.ts
- ┃ ┃ ┣ 📜test.event.ts
  ┃ ┃ ┣ 📜user-created.event.ts
- ┃ ┃ ┗ 📜user-events.handler.ts
- ┃ ┣ 📂query
- ┃ ┃ ┣ 📜get-user-info.handler.ts
- ┃ ┃ ┗ 📜get-user-info.query.ts
- ┃ ┣ 📜UserInfo.ts
- ┃ ┣ 📜users.controller.ts
- ┃ ┣ 📜users.module.ts
- ┃ ┗ 📜users.service.ts
+ ┃ ┃ ┣ 📜user.factory.spec.ts
+ ┃ ┃ ┣ 📜user.factory.ts
+ ┃ ┃ ┗ 📜user.ts
+ ┃ ┣ 📂infra
+ ┃ ┃ ┣ 📂adapter
+ ┃ ┃ ┃ ┗ 📜email.service.ts
+ ┃ ┃ ┗ 📂db
+ ┃ ┃ ┃ ┣ 📂entities
+ ┃ ┃ ┃ ┃ ┗ 📜user.entity.ts
+ ┃ ┃ ┃ ┗ 📂repository
+ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.ts
+ ┃ ┣ 📂interface
+ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┣ 📜create-user.dto.ts
+ ┃ ┃ ┃ ┣ 📜user-login.dto.ts
+ ┃ ┃ ┃ ┗ 📜verify-email.dto.ts
+ ┃ ┃ ┣ 📜UserInfo.ts
+ ┃ ┃ ┗ 📜users.controller.ts
+ ┃ ┗ 📜users.module.ts
  ┣ 📂utils
  ┃ ┗ 📂decorators
  ┃ ┃ ┗ 📜not-in.ts
