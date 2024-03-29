@@ -24,8 +24,8 @@ Click-Challenge는 참가자들이 실시간으로 클릭 수를 확인하며 �
 - JWT를 이용하여 인증/인가.
 - Guard를 통해 라우트 핸들러에서 인증
 - CQRS 패턴 적용하여, command, query 분리
-
-##현재까지 작업 내용은 클론코딩이며 부족한 부분들을 추가적으로 습득하며 차근차근 넓혀갈 계획입니다.
+- Clean Architecture 적용(infra/ interface/ application/ domain)
+- Test code 구현 (application/command Test code 구현, 추후 Query 추가 예정)
 
 
 
@@ -123,20 +123,6 @@ npm run start:dev
 ## ⚒ CI/CD
 추후 추가 예정
 
-## 👨‍💻 Role & Contribution
-
-**Frontend (Web)**
-
-- ex)관리자 페이지 (Vue.js) 개발
-- ex)전체 아키텍처 구성
-
-**Devops**
-
--ex) CI/CD 구축 (Docker, Github Action)
-
-**etc**
-
-- 전체 개발 일정 및 이슈 관리
 
 ## 👨‍👩‍👧‍👦 Developer
 *  **이승원** ([tomeee11](https://github.com/tomeee11))
