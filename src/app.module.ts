@@ -13,6 +13,7 @@ import { BatchModule } from './batch/batch.module';
 import { HttpModule } from '@nestjs/axios';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthCheckController } from './health-check/health-check.controller';
+import { CounterModule } from './counter/counter.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { HealthCheckController } from './health-check/health-check.controller';
     BatchModule,
     HttpModule,
     TerminusModule,
+    CounterModule,
   ],
   controllers: [HealthCheckController],
   providers: [],

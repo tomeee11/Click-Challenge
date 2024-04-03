@@ -2,6 +2,7 @@ import { Request } from 'express';
 import { Observable } from 'rxjs';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
+import { User } from './users/domain/user';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,7 +18,7 @@ export class AuthGuard implements CanActivate {
   private validateRequest(request: Request) {
     const jwtString = request.headers.authorization.split('Bearer ')[1];
 
-    this.authService.verify(jwtString);
+    const user = this.authService.verify(jwtString);
 
     return true;
   }
