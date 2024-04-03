@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { CounterEntity } from 'src/counter/entities/counter.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 /* NOTE:
  @Entity('User')으로 진행하였을 때, [Nest] QueryFailedError: Table 'user' already exists  에러 발생
  최신 버전에서 Mysql은 대문자로 구성된 테이블을 허용하지 않는다.
@@ -20,4 +21,7 @@ export class UserEntity {
 
   @Column({ length: 60 })
   signupVerifyToken: string;
+
+  @OneToMany(() => CounterEntity, (counter) => counter.user)
+  counters: CounterEntity;
 }

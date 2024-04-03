@@ -1,3 +1,5 @@
-import { Request } from 'express';
-
-export interface CustomRequest extends Request {}
+export interface CustomRequest extends Request {
+  user?: {
+    id: number;
+  };
+}

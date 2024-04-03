@@ -2,7 +2,6 @@ import { Request } from 'express';
 import { Observable } from 'rxjs';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
-import { User } from './users/domain/user';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -15,10 +14,14 @@ export class AuthGuard implements CanActivate {
     return this.validateRequest(request);
   }
 
-  private validateRequest(request: Request) {
+  private async validateRequest(request: Request) {
     const jwtString = request.headers.authorization.split('Bearer ')[1];
 
-    const user = this.authService.verify(jwtString);
+    const { userId } = await this.authService.verify(jwtString);
+
+    (request as any).user = {
+      id: userId,
+    };
 
     return true;
   }
