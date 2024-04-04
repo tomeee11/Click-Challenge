@@ -9,9 +9,11 @@ export class CounterController {
 
   @UseGuards(AuthGuard)
   @Post('/count')
-  async count(@Req() req: CustomRequest): Promise<void> {
+  async count(@Req() req: CustomRequest): Promise<number> {
     const id = req.user.id;
 
-    await this.counterService.Increase(+id);
+    const count = await this.counterService.Increase(+id);
+
+    return count;
   }
 }
