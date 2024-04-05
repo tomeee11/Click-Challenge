@@ -1,4 +1,4 @@
-import { CounterEntity } from 'src/counter/entities/counter.entity';
+import { CounterEntity } from 'src/counter/infra/DB/entities/counter.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 /* NOTE:
  @Entity('User')으로 진행하였을 때, [Nest] QueryFailedError: Table 'user' already exists  에러 발생

@@ -1,5 +1,5 @@
 import { Controller, Post, Req, UseGuards } from '@nestjs/common';
-import { CounterService } from './counter.service';
+import { CounterService } from '../application/counter.service';
 import { AuthGuard } from 'src/auth.guard';
 import { CustomRequest } from 'src/custom.request';
 

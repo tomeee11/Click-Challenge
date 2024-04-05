@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CounterController } from './counter.controller';
-import { CounterService } from './counter.service';
+import { CounterService } from '../application/counter.service';
 
 describe('CounterController', () => {
   let controller: CounterController;
